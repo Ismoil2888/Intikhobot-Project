@@ -40,6 +40,10 @@
     padding: 16px;
     background-color: #00a99d;
     color: white;
+    position: fixed;
+    z-index: 1999;
+    width: 100%;
+    top: 0;
   }
   
   /* Кнопка "назад" */
@@ -57,7 +61,11 @@
   
   .info-list {
     padding: 16px;
+    margin-bottom: 57px;
+    margin-top: 57px;
     list-style-type: none;
+    overflow-y: auto;
+    height: 100vh;
   }
   
   .info-list li {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Sections.css";
 import { FaChevronLeft } from "react-icons/fa";
 
@@ -24,13 +24,13 @@ function Sections() {
         <h2 className="header-title">Маълумот</h2>
       </div>
       <ul className="info-list">
-        <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>О выборах Маджлиси Оли Республики Таджикистан</li>
-        <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>О выборах депутатов в местные Маджлисы народных депутатов</li>
-        <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Выборы депутатов в джамоатах</li>
+        <Link to="/section1"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>О выборах Маджлиси Оли Республики Таджикистан</li></Link>
+        <Link to="/section2"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>О выборах депутатов в местные Маджлисы народных депутатов</li></Link>
+        <Link to="/section3"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Выборы депутатов в джамоатах</li></Link>
         <li>Дигар маводхо</li>
-        <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Порядок участия национальных наблюдателей на выборах</li>
-        <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Порядок участия СМИ на выборах</li>
-        <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Порядок участия международных наблюдателей на выборах</li>
+        <Link to="/section4"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Порядок участия национальных наблюдателей на выборах</li></Link>
+        <Link to="/section5"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Порядок участия СМИ на выборах</li></Link>
+        <Link to="/section6"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Порядок участия международных наблюдателей на выборах</li></Link>
       </ul>
     </div>
   );
