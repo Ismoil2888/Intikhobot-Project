@@ -26,7 +26,7 @@ function Section1() {
       <ul className="info-list">
         <Link to="/section1page1"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Общие информация</li></Link>
         <Link to="/section1page2"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Общая положения</li></Link>
-        <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Избирательные комиссии</li>
+        <Link to="/section1page3"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Избирательные комиссии</li></Link>
         <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Избирательные округ и участки</li>
         <li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Списки избирателей</li>
         <Link to="/section4"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Выдвижение, регистрация и гарантии деятельности кандидатов</li></Link>
