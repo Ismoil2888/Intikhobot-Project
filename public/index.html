@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="%PUBLIC_URL%/iconapp.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="google" content="notranslate">
+    <meta name="theme-color" content="#161b22" />
+    <meta
+      name="description"
+      content="Интихоботи вакилон" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/appicon.jpeg" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <title>Parlament App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <script>
+      if('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./serviceworker.js')
+               .then((reg) => console.log('Success: ', reg.scope))
+               .catch((err) => console.log('Failure: ', err));
+        } )
+      }
+    </script>
+
+    <script>
+
+// Отключение поведения pull-to-refresh
+window.addEventListener('load', () => {
+  let touchStartY = 0;
+  let touchEndY = 0;
+
+  document.addEventListener('touchstart', (event) => {
+    touchStartY = event.touches[0].clientY;
+  });
+
+  document.addEventListener('touchmove', (event) => {
+    touchEndY = event.touches[0].clientY;
+    
+    if (touchEndY > touchStartY && window.scrollY === 0) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+});
+
+    </script>
+
+  </body>
+</html>
