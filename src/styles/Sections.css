@@ -114,14 +114,13 @@
   display: flex;
   flex-direction: column;
   height: 100vh; /* Полная высота экрана */
-  overflow: hidden; /* Запрещаем скролл для всего контейнера */
 }
 
 /* Закрепленный header */
 .header {
   position: sticky;
   top: 0; /* Фиксируем header вверху */
-  background-color: #fff; /* Цвет фона */
+  background-color: #32a6e0; /* Цвет фона */
   z-index: 10; /* Устанавливаем поверх остального контента */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Добавляем тень */
   padding: 10px 15px; /* Внутренний отступ */
