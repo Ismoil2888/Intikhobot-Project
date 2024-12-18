@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Intikhobot-Project/static/css/main.aa4ff71e.css",
+    "main.css": "/Intikhobot-Project/static/css/main.8c209f15.css",
     "main.js": "/Intikhobot-Project/static/js/main.316087c5.js",
     "static/js/488.1b9162b8.chunk.js": "/Intikhobot-Project/static/js/488.1b9162b8.chunk.js",
     "static/media/iconapp.png": "/Intikhobot-Project/static/media/iconapp.f11e1966b16ff98a7427.png",
     "index.html": "/Intikhobot-Project/index.html",
-    "main.aa4ff71e.css.map": "/Intikhobot-Project/static/css/main.aa4ff71e.css.map",
+    "main.8c209f15.css.map": "/Intikhobot-Project/static/css/main.8c209f15.css.map",
     "main.316087c5.js.map": "/Intikhobot-Project/static/js/main.316087c5.js.map",
     "488.1b9162b8.chunk.js.map": "/Intikhobot-Project/static/js/488.1b9162b8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.aa4ff71e.css",
+    "static/css/main.8c209f15.css",
     "static/js/main.316087c5.js"
   ]
 }
