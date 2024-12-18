@@ -23,7 +23,7 @@ function Section1() {
         <FaChevronLeft onClick={goBack} className="back-button" />
         <h2 className="header-title">О выборах Маджлиси Оли Республики Таджикистан</h2>
       </div>
-      <ul className="info-list">
+      <ul className="list-sections">
         <Link to="/section1page1"><li style={{fontWeight: "bold", fontSize: "17px", color: "black"}}>Общая информация</li></Link>
         <Link to="/section1page2"><li style={{fontWeight: "bold", fontSize: "17px", color: "black"}}>Общие положения</li></Link>
         <Link to="/section1page3"><li style={{fontWeight: "bold", fontSize: "17px", color: "black"}}>Избирательные комиссии</li></Link>
