@@ -6,53 +6,55 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center; */
   }
 
   .home-header{
     display: flex;
     align-items: center;
     justify-content: center;
+    object-fit: cover;
+   }
+
+  .parlament-background{
     width: 100%;
-    height: 70px;
-    top: 0;
-    font-size: 19.5px;
-    background: #00a99d;
-    color: white;
-    position: absolute;
   }
   
   /* Title Styling */
   .title {
+    margin-top: 40px;
     font-size: 2rem;
-    color: #333;
+    color: #3F0DD1;
   }
   
   /* Logo Styling */
   .logo-container {
-    margin-bottom: 15px;
+    margin: 15px;
   }
   
   .logo {
-    width: 400px; /* Adjust size as needed */
-    height: 300px;
+    width: 230px; /* Adjust size as needed */
+    height: 220px;
   }
   
   /* Buttons Container */
   .buttons-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
+    margin-bottom: 75px;
   }
   
   .button {
-    background-color: #00a651;
+    width: 220px;
+    background-color: #3F0DD1;
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;

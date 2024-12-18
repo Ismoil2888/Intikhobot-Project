@@ -1,7 +1,8 @@
 import React from "react";
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
-import logo from "../styles/iconapp.png";
+import logo from "../styles/logointikhobot.png";
+import parlament from "../styles/parlament.png";
 
 function Home() {
     const navigate = useNavigate();
@@ -13,10 +14,10 @@ function Home() {
   return (
     <div className="main-container">
       <div className="home-header">
-        <h2>Интихоботи вакилони халқ - 2024</h2>
+        <img src={parlament} alt="" className="parlament-background" />
       </div>
       {/* Title */}
-      <h1 className="title">Интихоботи вакилони халқ - 2024</h1>
+      <h1 className="title">Интихоботи вакилони халқ - 2025</h1>
 
       {/* Logo */}
       <div className="logo-container">
@@ -25,10 +26,10 @@ function Home() {
 
       {/* Buttons */}
       <div className="buttons-container">
+        <button className="button">ЗАБОНИ БАРНОМА</button>
       <button className="button" onClick={handleNavigate}>
           МАЪЛУМОТ
       </button>
-        <button className="button">ЗАБОНИ БАРНОМА</button>
         <button className="button">ДАР БОРАИ МО</button>
       </div>
     </div>
