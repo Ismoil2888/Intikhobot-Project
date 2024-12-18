@@ -22,7 +22,7 @@ function Section1() {
       <div className="header">
         <FaChevronLeft onClick={goBack} className="back-button" />
         <h2 className="header-title">О выборах Маджлиси Оли Республики Таджикистан</h2>
-      </div> 44
+      </div>
       <ul className="info-list">
         <Link to="/section1page1"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Общие информация</li></Link>
         <Link to="/section1page2"><li style={{fontWeight: "bold", fontSize: "17px", color: "rgb(50, 50, 50)"}}>Общая положения</li></Link>

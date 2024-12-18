@@ -3,6 +3,7 @@
   padding: 0;
   scrollbar-width: none;
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 a{

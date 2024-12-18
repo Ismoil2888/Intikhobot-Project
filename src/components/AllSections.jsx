@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Sections.css";
 import { FaChevronLeft } from "react-icons/fa";
 
-function Sections() {
+function AllSections() {
   const navigate = useNavigate();
   const [isExiting, setIsExiting] = useState(false);
 
@@ -36,4 +36,4 @@ function Sections() {
   );
 }
 
-export default Sections;
+export default AllSections;

@@ -1,10 +1,16 @@
 .info-container {
-    width: 100%;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    height: 100vh;
+    overflow: hidden;
+    animation: slide-in 0.3s forwards;
+    /* width: 100%;
     height: 100%;
     background-color: white;
-    /* transform: translateX(100%); */
     animation: slide-in 0.3s forwards;
-    z-index: 2;
+    z-index: 2; */
   }
   
   @keyframes slide-in {
@@ -32,15 +38,17 @@
   
   /* Заголовок */
   .header {
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     align-items: center;
     padding: 16px;
     background-color: #00a99d;
     color: white;
-    position: fixed;
-    z-index: 9999;
+    z-index: 1000;
     width: 100%;
-    top: 0px;
+    height: 60px;
   }
   
   /* Кнопка "назад" */
@@ -57,12 +65,17 @@
   }
   
   .info-list {
-    padding: 16px;
+    margin-top: 80px; /* Offset to prevent overlap with header */
+    height: calc(100vh - 60px); /* Fill remaining viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px;
+    background-color: #f4f4f4;
+    /* padding: 16px;
     padding-bottom: 57px;
     padding-top: 77px;
     list-style-type: none;
-    overflow-y: scroll;
-    height: 100vh;
+    overflow-y: auto;
+    height: 100vh; */
   }
   
   .info-list li {
