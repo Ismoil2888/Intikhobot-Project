@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/Intikhobot-Project/static/css/main.b222b89f.css",
-    "main.js": "/Intikhobot-Project/static/js/main.ff57afe5.js",
+    "main.js": "/Intikhobot-Project/static/js/main.766f5983.js",
     "static/js/488.1b9162b8.chunk.js": "/Intikhobot-Project/static/js/488.1b9162b8.chunk.js",
     "static/media/parlament.png": "/Intikhobot-Project/static/media/parlament.e9932935971ed8f93a38.png",
     "static/media/logointikhobot.png": "/Intikhobot-Project/static/media/logointikhobot.84c72ea1d8875f945a5d.png",
     "static/media/parcham.png": "/Intikhobot-Project/static/media/parcham.2a4aec2d934e28c36d4c.png",
     "index.html": "/Intikhobot-Project/index.html",
     "main.b222b89f.css.map": "/Intikhobot-Project/static/css/main.b222b89f.css.map",
-    "main.ff57afe5.js.map": "/Intikhobot-Project/static/js/main.ff57afe5.js.map",
+    "main.766f5983.js.map": "/Intikhobot-Project/static/js/main.766f5983.js.map",
     "488.1b9162b8.chunk.js.map": "/Intikhobot-Project/static/js/488.1b9162b8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b222b89f.css",
-    "static/js/main.ff57afe5.js"
+    "static/js/main.766f5983.js"
   ]
 }
