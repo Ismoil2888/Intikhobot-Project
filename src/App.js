@@ -11,12 +11,14 @@ import Section3 from "./components/Section3";
 import Section4 from "./components/Section4";
 import Section5 from "./components/Section5";
 import Section6 from "./components/Section6";
+import Zagruzka from "./components/zagruzka";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/sections" element={<AllSections />} />
+      <Route path="/zagruzka" element={<Zagruzka />} />
       <Route path="/section1" element={<Section1 />} />
       <Route path="/section1page1" element={<Section1Page1 />} />
       <Route path="/section1page2" element={<Section1Page2 />} />
