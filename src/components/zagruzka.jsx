@@ -1,71 +1,35 @@
-import React from 'react';
-import { isAndroid, isIOS, osVersion } from 'react-device-detect';
+import React from "react";
+import platform from "platform";
 
-const apkFiles = {
-  arm64: '/apk-files/app-arm64-v8a.apk',
-  armeabi: '/apk-files/app-armeabi-v7a.apk',
-  x86: '/apk-files/app-x86.apk',
-  x86_64: '/apk-files/app-x86_64.apk',
-};
+const Zagruzka = () => {
+  const downloadApp = () => {
+    const os = platform.os;
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-function Zagruzka() {
-  const handleDownload = () => {
-    if (!isAndroid) {
-      alert('К сожалению, APK файлы доступны только для Android устройств.');
-      return;
-    }
+    if (os.family === "Android") {
+      // Определение архитектуры
+      const is64Bit = userAgent.includes("arm64");
 
-    // Логика определения архитектуры устройства
-    const architecture = detectArchitecture();
+      const apkFile = is64Bit
+        ? "/apk-files/app-arm64-v8a.apk"
+        : "/apk-files/app-armeabi-v7a.apk";
 
-    if (apkFiles[architecture]) {
-      const apkUrl = apkFiles[architecture];
-      alert(`Ваше устройство совместимо с версией: ${architecture}. Скачивание началось.`);
-      window.location.href = apkUrl; // Скачивание APK
+      // Перенаправление на файл
+      window.location.href = apkFile;
+    } else if (os.family === "iOS") {
+      // Переход в App Store для iOS
+      window.location.href = "https://apps.apple.com/your-app-link";
     } else {
-      alert('Не удалось определить подходящую версию APK для вашего устройства.');
+      alert("Ваше устройство не поддерживается для загрузки приложения.");
     }
-  };
-
-  const detectArchitecture = () => {
-    const userAgent = navigator.userAgent || '';
-    if (userAgent.includes('arm64') || userAgent.includes('aarch64')) {
-      return 'arm64';
-    } else if (userAgent.includes('armeabi')) {
-      return 'armeabi';
-    } else if (userAgent.includes('x86_64')) {
-      return 'x86_64';
-    } else if (userAgent.includes('x86')) {
-      return 'x86';
-    }
-    return null;
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Скачать APK</h1>
-      <p>
-        Нажмите на кнопку ниже, чтобы скачать подходящий APK для вашего устройства.
-        <br />
-        {isAndroid && <strong>Определена ОС: Android {osVersion}</strong>}
-        {!isAndroid && <strong>Определите устройство: не Android</strong>}
-      </p>
-      <button
-        onClick={handleDownload}
-        style={{
-          padding: '10px 20px',
-          fontSize: '16px',
-          backgroundColor: '#4CAF50',
-          color: 'white',
-          border: 'none',
-          cursor: 'pointer',
-          borderRadius: '5px',
-        }}
-      >
-        Скачать APK
-      </button>
+    <div>
+      <h1>Загрузка приложения</h1>
+      <button onClick={downloadApp}>Скачать приложение</button>
     </div>
   );
-}
+};
 
 export default Zagruzka;
