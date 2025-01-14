@@ -1,45 +1,3 @@
-// import React from "react";
-
-// const Zagruzka = () => {
-//   const handleDownload = () => {
-//     // Ссылка на файл в папке public
-//     const apkFileUrl = `${process.env.PUBLIC_URL}/apk-files/app-arm64-v8a.apk`;
-
-//     // Создаем временную ссылку для скачивания
-//     const link = document.createElement("a");
-//     link.href = apkFileUrl;
-//     link.download = "app-arm64-v8a.apk"; // Имя файла для сохранения
-//     link.click();
-//   };
-
-//   return (
-//     <button
-//       onClick={handleDownload}
-//       style={{
-//         padding: "10px 20px",
-//         fontSize: "16px",
-//         backgroundColor: "#4CAF50",
-//         color: "#fff",
-//         border: "none",
-//         borderRadius: "5px",
-//         cursor: "pointer",
-//       }}
-//     >
-//       Скачать APK
-//     </button>
-//   );
-// };
-
-// export default Zagruzka;
-
-
-
-
-
-
-
-
-
 import React, { useState } from "react";
 import "./Zagruzka.css";
 
@@ -48,6 +6,9 @@ const AppInstallPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isModalOpenn, setIsModalOpenn] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const screenshots = [
     `${process.env.PUBLIC_URL}/images/Screenshot1.jpg`,
     `${process.env.PUBLIC_URL}/images/Screenshot2.jpg`,
@@ -75,7 +36,50 @@ const AppInstallPage = () => {
     setIsModalOpen(false);
   };
 
+  const openModall = (content) => {
+    setModalContent(content);
+    setIsModalOpenn(true);
+  };
+
+  const closeModall = () => {
+    setIsModalOpenn(false);
+  };
+
   return (
+    <div>
+   {/* Шапка с меню */}
+   <header
+   style={{
+     position: "fixed",
+     top: 0,
+     left: 0,
+     width: "100%",
+     height: "60px",
+     backgroundColor: "#234eda",
+     color: "#fff",
+     display: "flex",
+     alignItems: "center",
+     justifyContent: "space-between",
+     padding: "0 20px",
+     zIndex: 1000,
+   }}
+ >
+   <h2 style={{ marginLeft: 70 }}>Интихоботи 2025</h2>
+   <button
+     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+     style={{
+       backgroundColor: "transparent",
+       border: "none",
+       color: "#fff",
+       fontSize: "24px",
+       cursor: "pointer",
+       position: "absolute",
+     }}
+   >
+     ☰
+   </button>
+ </header>
+
     <div
       style={{
         display: "flex",
@@ -86,10 +90,97 @@ const AppInstallPage = () => {
         backgroundColor: "#f9f9f9",
         fontFamily: "'Roboto', sans-serif",
         padding: "20px",
+        marginTop: "55px",
         textAlign: "center",
         overflowX: "hidden",
       }}
     >
+
+            {/* Боковое меню */}
+            <aside
+        style={{
+          position: "fixed",
+          top: 0,
+          left: isSidebarOpen ? 0 : "-400px",
+          width: "300px",
+          height: "100%",
+          backgroundColor: "#fff",
+          boxShadow: "2px 0 5px rgba(0, 0, 0, 0.2)",
+          transition: "left 0.3s ease",
+          zIndex: 999,
+          display: "flex",
+          flexDirection: "column",
+          padding: "20px",
+        }}
+      >
+        <div style={{ marginBottom: "30px" }}>
+          <h3 style={{ margin: 0, color: "#234eda" }}>Интихоботи 2025</h3>
+        </div>
+        <button
+          onClick={() =>
+            openModall(
+              <>
+                <h3>Приложение для старых устройств</h3>
+                <p style={{marginTop: "15px"}}>
+                  Это версия приложения предназначена для устройств с версиями Android
+                  4.4 и выше. Оно оптимизировано для более ранних устройств,
+                  обеспечивая стабильную работу.
+                </p>
+                <button
+                  onClick={() => handleDownload("app-armeabi-v7a.apk")}
+                  style={{
+                    marginTop: "20px",
+                    padding: "10px 20px",
+                    fontSize: "16px",
+                    backgroundColor: "#2196F3",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Скачать APK (armeabi-v7a)
+                </button>
+              </>
+            )
+          }
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            textAlign: "left",
+            padding: "10px 0",
+            cursor: "pointer",
+            color: "#234eda",
+          }}
+        >
+          Приложение для старых устройств
+        </button>
+        <button
+          onClick={() =>
+            openModall(
+              <>
+                <h3>Инструкция по установке</h3>
+                <p>
+                  Чтобы установить приложение, скачайте APK-файл и откройте его
+                  нажав на "Подробнее" и там будет файл приложения. При необходимости в настройках дайте разрешение на установку
+                  приложений из неизвестных источников и начнеётся установка приложения на ваше устройство.
+                </p>
+              </>
+            )
+          }
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            textAlign: "left",
+            padding: "10px 0",
+            cursor: "pointer",
+            color: "#234eda",
+          }}
+        >
+          Инструкция установки
+        </button>
+      </aside>
+
       {/* Иконка приложения */}
       <div style={{display: "flex", alignItems: "center"}}>
       <div
@@ -273,6 +364,53 @@ const AppInstallPage = () => {
           </button>
         </div>
       )}
+
+           {/* Модальное окно */}
+           {isModalOpenn && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: "20px",
+              borderRadius: "10px",
+              maxWidth: "500px",
+              width: "90%",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+              textAlign: "center",
+            }}
+          >
+            {modalContent}
+            <button
+              onClick={closeModall}
+              style={{
+                marginTop: "20px",
+                padding: "10px 20px",
+                backgroundColor: "#234eda",
+                color: "#fff",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              Закрыть
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
     </div>
   );
 };
