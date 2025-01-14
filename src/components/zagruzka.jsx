@@ -1,44 +1,39 @@
-import React, { useState } from "react";
-import platform from "platform";
+import React from "react";
+import "./Zagruzka.css";
+import appIcon from "../assets/images/appbasiclogo.png";
 
 const Zagruzka = () => {
-  const [arch, setArch] = useState(null); // Хранение архитектуры устройства
-  const [error, setError] = useState(null); // Хранение ошибок, если возникнут
-
-  const downloadApp = () => {
-    setError(null); // Сбрасываем ошибку перед началом
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-    try {
-      // Проверяем платформу
-      const os = platform.os;
-      if (os.family === "Android") {
-        // Определяем архитектуру
-        const is64Bit = userAgent.includes("arm64") || userAgent.includes("aarch64");
-        const selectedArch = is64Bit ? "arm64-v8a" : "armeabi-v7a";
-        setArch(selectedArch); // Устанавливаем архитектуру в состояние
-
-        // Выбираем нужный APK
-        const apkFile = is64Bit
-          ? "/apk-files/app-arm64-v8a.apk"
-          : "/apk-files/app-armeabi-v7a.apk";
-
-        // Начинаем загрузку файла
-        window.location.href = apkFile;
-      } else {
-        setError("Ваше устройство не поддерживается для загрузки приложения.");
-      }
-    } catch (e) {
-      setError("Произошла ошибка при определении устройства.");
-    }
-  };
-
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h1>Загрузка приложения</h1>
-      <button onClick={downloadApp}>Установить</button>
-      {arch && <p>У вас архитектура: {arch}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="app-container">
+      <div className="app-header">
+         <img src={appIcon} alt="App Icon" className="app-icon" />
+        <div className="app-info">
+          <h1>Интихоботи Вакилони Халк - 2025</h1>
+          <p>Описание вашего приложения. Оно делает жизнь проще и лучше.</p>
+        </div>
+      </div>
+      <div className="app-buttons">
+        <button
+          className="download-button new-devices"
+          onClick={() =>
+            (window.location.href = "/apk-files/app-arm64-v8a.apk")
+          }
+        >
+          Установить (новые устройства)
+        </button>
+        <button
+          className="download-button old-devices"
+          onClick={() =>
+            (window.location.href = "/apk-files/app-armeabi-v7a.apk")
+          }
+        >
+          Установить (старые устройства)
+        </button>
+      </div>
+      <div className="app-footer">
+        <p>Версия: 1.10 | Размер: 25 MB</p>
+        <p>&copy; 2025 Парлумони Чумхурии Точикистон. Все права защищены.</p>
+      </div>
     </div>
   );
 };
