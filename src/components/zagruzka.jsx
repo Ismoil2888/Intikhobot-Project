@@ -82,7 +82,7 @@ const AppInstallPage = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100vh",
+        // minHeight: "100vh",
         backgroundColor: "#f9f9f9",
         fontFamily: "'Roboto', sans-serif",
         padding: "20px",
@@ -98,7 +98,6 @@ const AppInstallPage = () => {
           height: "140px",
           backgroundColor: loading ? "#ddd" : "transparent",
           borderRadius: "20px",
-          marginBottom: "20px",
         }}
       >
         <img
@@ -114,20 +113,15 @@ const AppInstallPage = () => {
           }}
         />
       </div>
-      <h1 style={{ fontSize: "26px", color: "#333", marginBottom: "30px"}}>
+      <h1 style={{ fontSize: "25px", color: "#333", marginBottom: "20px"}}>
         Интихоботи вакилони халқ - 2025
       </h1>
       </div>
 
-      <p style={{ fontSize: "16px", color: "#666", marginBottom: "10px" }}>
-        Барнома барои интихоботи вакилони халқ соли 2025. Насб кунед ва аз
-        имконоти муфиди он истифода баред!
-      </p>
       <p
         style={{
           fontSize: "14px",
           color: "#888",
-          marginTop: "10px",
           fontStyle: "italic",
         }}
       >
@@ -141,7 +135,7 @@ const AppInstallPage = () => {
           marginBottom: "20px",
         }}
       >
-        Андозаи барнома: <strong>25 MB</strong>
+        Андозаи барнома: <strong>26 MB</strong>
       </p>
 
       {/* Кнопки для скачивания */}
@@ -149,49 +143,52 @@ const AppInstallPage = () => {
         <button
           onClick={() => handleDownload("app-arm64-v8a.apk")}
           style={{
+            width: "335px",
             padding: "10px 20px",
             fontSize: "16px",
-            backgroundColor: "#4CAF50",
+            backgroundColor: "#234eda",
             color: "#fff",
             border: "none",
-            borderRadius: "5px",
+            borderRadius: "50px",
             cursor: "pointer",
             transition: "background-color 0.3s",
           }}
           onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-          onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#234eda")}
         >
-          Насб кардан (64-бита)
+          Насб кардан
         </button>
-        <button
+        {/* <button
           onClick={() => handleDownload("app-armeabi-v7a.apk")}
           style={{
+            width: "155px",
             padding: "10px 20px",
             fontSize: "16px",
             backgroundColor: "#2196F3",
             color: "#fff",
             border: "none",
-            borderRadius: "5px",
+            borderRadius: "50px",
             cursor: "pointer",
             transition: "background-color 0.3s",
           }}
           onMouseEnter={(e) => (e.target.style.backgroundColor = "#1e88e5")}
           onMouseLeave={(e) => (e.target.style.backgroundColor = "#2196F3")}
         >
-          Насб кардан (32-бита)
-        </button>
+          Насб кардан
+        </button> */}
       </div>
 
       {/* Скриншоты приложения */}
       <div
         style={{
-          maxWidth: "400px",
+          maxWidth: "350px",
           display: "flex",
           overflowX: "auto",
           gap: "15px",
           marginBottom: "20px",
-          paddingLeft: "20px",
-          paddingRight: "20px",
+          marginLeft: "30px",
+          paddingLeft: "70px",
+          paddingRight: "90px",
           paddingBottom: "10px",
         }} className="screens"
       >
@@ -223,6 +220,14 @@ const AppInstallPage = () => {
             />
           </div>
         ))}
+      </div>
+ 
+ <div style={{textAlign: "left"}}>
+<h2>Тавсиф:</h2>
+      <p style={{ fontSize: "16px", color: "#666", marginTop: "10px" }}>
+        Барнома барои интихоботи вакилони халқ соли 2025. Насб кунед ва аз
+        имконоти муфиди он истифода баред!
+      </p>
       </div>
 
       {/* Модальное окно */}
