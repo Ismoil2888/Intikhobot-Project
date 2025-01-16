@@ -16,9 +16,9 @@ import Zagruzka from "./components/zagruzka";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Zagruzka />} />
       <Route path="/sections" element={<AllSections />} />
-      <Route path="/zagruzka" element={<Zagruzka />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/section1" element={<Section1 />} />
       <Route path="/section1page1" element={<Section1Page1 />} />
       <Route path="/section1page2" element={<Section1Page2 />} />
