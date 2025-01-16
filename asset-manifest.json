@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/Intikhobot-Project/static/css/main.ad3c04e4.css",
-    "main.js": "/Intikhobot-Project/static/js/main.f5c5d9d2.js",
-    "static/js/488.1b9162b8.chunk.js": "/Intikhobot-Project/static/js/488.1b9162b8.chunk.js",
-    "static/media/parlament.png": "/Intikhobot-Project/static/media/parlament.e9932935971ed8f93a38.png",
-    "static/media/logointikhobot.png": "/Intikhobot-Project/static/media/logointikhobot.84c72ea1d8875f945a5d.png",
-    "static/media/parcham.png": "/Intikhobot-Project/static/media/parcham.2a4aec2d934e28c36d4c.png",
-    "index.html": "/Intikhobot-Project/index.html",
-    "main.ad3c04e4.css.map": "/Intikhobot-Project/static/css/main.ad3c04e4.css.map",
-    "main.f5c5d9d2.js.map": "/Intikhobot-Project/static/js/main.f5c5d9d2.js.map",
-    "488.1b9162b8.chunk.js.map": "/Intikhobot-Project/static/js/488.1b9162b8.chunk.js.map"
+    "main.css": "/static/css/main.76bbe7d2.css",
+    "main.js": "/static/js/main.48c2b575.js",
+    "static/js/488.1b9162b8.chunk.js": "/static/js/488.1b9162b8.chunk.js",
+    "static/media/parlament.png": "/static/media/parlament.e9932935971ed8f93a38.png",
+    "static/media/logointikhobot.png": "/static/media/logointikhobot.84c72ea1d8875f945a5d.png",
+    "static/media/parcham.png": "/static/media/parcham.2a4aec2d934e28c36d4c.png",
+    "index.html": "/index.html",
+    "main.76bbe7d2.css.map": "/static/css/main.76bbe7d2.css.map",
+    "main.48c2b575.js.map": "/static/js/main.48c2b575.js.map",
+    "488.1b9162b8.chunk.js.map": "/static/js/488.1b9162b8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ad3c04e4.css",
-    "static/js/main.f5c5d9d2.js"
+    "static/css/main.76bbe7d2.css",
+    "static/js/main.48c2b575.js"
   ]
 }
