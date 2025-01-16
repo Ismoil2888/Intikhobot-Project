@@ -86,7 +86,6 @@ const AppInstallPage = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        // minHeight: "100vh",
         backgroundColor: "#f9f9f9",
         fontFamily: "'Roboto', sans-serif",
         padding: "20px",
@@ -102,7 +101,7 @@ const AppInstallPage = () => {
           position: "fixed",
           top: 0,
           left: isSidebarOpen ? 0 : "-400px",
-          width: "300px",
+          width: "350px",
           height: "100%",
           backgroundColor: "#fff",
           boxShadow: "2px 0 5px rgba(0, 0, 0, 0.2)",
@@ -139,7 +138,7 @@ const AppInstallPage = () => {
                     cursor: "pointer",
                   }}
                 >
-                  Скачать APK (armeabi-v7a)
+                  Скачать APK
                 </button>
               </>
             )
@@ -151,6 +150,8 @@ const AppInstallPage = () => {
             padding: "10px 0",
             cursor: "pointer",
             color: "#234eda",
+            fontSize: "18px",
+            fontWeight: "bold",
           }}
         >
           Приложение для старых устройств
@@ -175,6 +176,8 @@ const AppInstallPage = () => {
             padding: "10px 0",
             cursor: "pointer",
             color: "#234eda",
+            fontSize: "18px",
+            fontWeight: "bold",
           }}
         >
           Инструкция установки
@@ -249,24 +252,6 @@ const AppInstallPage = () => {
         >
           Насб кардан
         </button>
-        {/* <button
-          onClick={() => handleDownload("app-armeabi-v7a.apk")}
-          style={{
-            width: "155px",
-            padding: "10px 20px",
-            fontSize: "16px",
-            backgroundColor: "#2196F3",
-            color: "#fff",
-            border: "none",
-            borderRadius: "50px",
-            cursor: "pointer",
-            transition: "background-color 0.3s",
-          }}
-          onMouseEnter={(e) => (e.target.style.backgroundColor = "#1e88e5")}
-          onMouseLeave={(e) => (e.target.style.backgroundColor = "#2196F3")}
-        >
-          Насб кардан
-        </button> */}
       </div>
 
       {/* Скриншоты приложения */}
