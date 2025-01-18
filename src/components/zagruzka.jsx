@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { database, ref, get, update } from "../firebase/firebase";
+// import { database, ref, get, runTransaction } from "../firebase/firebase";
+import { database } from "../firebase/firebase";
+import { ref, get, runTransaction } from "firebase/database";
 import "./Zagruzka.css";
 
 const AppInstallPage = () => {
   const [downloads, setDownloads] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -22,7 +26,7 @@ const AppInstallPage = () => {
     `${process.env.PUBLIC_URL}/images/Screenshot6.jpg`,
   ];
 
-  const screenshotsmenu = [
+  const screenshotsMenu = [
     `${process.env.PUBLIC_URL}/images/Screenshot_d1.jpg`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d2.png`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d3.png`,
@@ -34,21 +38,24 @@ const AppInstallPage = () => {
   useEffect(() => {
     // Получение текущего значения загрузок из Firebase
     const downloadsRef = ref(database, "downloads");
-    get(downloadsRef).then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        setDownloads(data.count || 0);
-      } else {
-        console.log("No data available");
-      }
-    });
+    get(downloadsRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          setDownloads(data.count || 0);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении данных:", error);
+      });
   }, []);
 
   const handleDownload = (fileName) => {
     const lastDownloadTime = localStorage.getItem("lastDownloadTime");
     const currentTime = Date.now();
 
-    // Проверяем, прошло ли 24 часа (24 * 60 * 60 * 1000 миллисекунд)
     if (lastDownloadTime && currentTime - lastDownloadTime < 24 * 60 * 60 * 1000) {
       showNotificationError(language === "tj" 
         ? "Шумо аллакай барномаро насб кардед. Такрор кардани насб баъд аз 24 соат имконпазир аст." 
@@ -57,32 +64,35 @@ const AppInstallPage = () => {
       return;
     }
 
-    // Сохраняем текущее время как время последнего клика
     localStorage.setItem("lastDownloadTime", currentTime);
 
-    // Выполняем загрузку
     const apkFileUrl = `${process.env.PUBLIC_URL}/apk-files/${fileName}`;
     const link = document.createElement("a");
     link.href = apkFileUrl;
     link.download = fileName;
     link.click();
+
     showNotification(language === "tj" 
       ? "Як лаҳза" 
       : "Минуту"
     );
 
-    // Обновление загрузок в Firebase
     const downloadsRef = ref(database, "downloads");
-    const newCount = downloads + 1;
-    update(downloadsRef, { count: newCount })
+
+    runTransaction(downloadsRef, (currentData) => {
+      if (currentData === null) {
+        return { count: 1 };
+      }
+      return { count: currentData.count + 1 };
+    })
       .then(() => {
-        setDownloads(newCount); // Обновляем локальное состояние
+        console.log("Количество скачиваний успешно обновлено.");
+        setDownloads((prev) => prev + 1);
       })
       .catch((error) => {
-        console.error("Ошибка обновления данных:", error);
+        console.error("Ошибка транзакции:", error);
       });
   };
-
 
 
     // Устанавливаем язык из localStorage при загрузке страницы
@@ -109,13 +119,44 @@ const AppInstallPage = () => {
     setIsModalOpen(false);
   };
 
-  const openMenuModal = (content) => {
-    setModalContent(content);
+  const openMenuModal = (index) => {
+    setModalContent(index);
     setIsMenuModalOpen(true);
   };
 
   const closeMenuModal = () => {
     setIsMenuModalOpen(false);
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!touchStartX) return;
+
+    const touchEndX = e.touches[0].clientX;
+    const deltaX = touchStartX - touchEndX;
+
+    if (deltaX > 50) {
+      // Свайп влево
+      goToNext();
+      setTouchStartX(null);
+    } else if (deltaX < -50) {
+      // Свайп вправо
+      goToPrev();
+      setTouchStartX(null);
+    }
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % screenshotsMenu.length);
+  };
+
+  const goToPrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? screenshotsMenu.length - 1 : prevIndex - 1
+    );
   };
 
    // Функция для успешных уведомлений
@@ -211,7 +252,7 @@ const handleContextMenu = (event) => {
                   обеспечивая стабильную работу.`}
                 </p>
                 <button style={styles.downloadButton2}
-                  onClick={() => handleDownload("app-armeabi-v7a.apk")}>
+                  onClick={() => handleDownload("intikhobot-2025_armeabi-v7a.apk")}>
                     {language === "tj" 
             ? `Насб кардан` 
             : `Скачать APK`}
@@ -240,7 +281,7 @@ const handleContextMenu = (event) => {
                   приложений из неизвестных источников и начнеётся установка приложения на ваше устройство.`}
                 </p>
                 <div style={styles.screensBlockMenu} className="screensmenu">
-                    {screenshotsmenu.map((screenshot, index) => (
+                    {screenshotsMenu.map((screenshot, index) => (
           <div
             key={index}
             style={{
@@ -252,10 +293,10 @@ const handleContextMenu = (event) => {
               position: "relative",
             }}
           >
-                    <img style={{width: "50px"}}
+                    <img style={{width: "50px", cursor: "pointer"}}
                     src={screenshot}
-                    alt={`Скриншот`}
-                    onClick={() => openModal(screenshot)}
+                    alt={`Скриншот ${index + 1}`}
+                    onClick={() => openModal(index)}
                 />
           </div>
         ))}
@@ -329,7 +370,7 @@ const handleContextMenu = (event) => {
       {/* Кнопкa для скачивания */}
       <div style={{ display: "flex", gap: "15px", marginBottom: "20px" }}>
         <button style={styles.downloadButton1}
-          onClick={() => handleDownload("app-arm64-v8a.apk")}
+          onClick={() => handleDownload("intikhobot-2025_arm64-v8a.apk")}
           onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
           onMouseLeave={(e) => (e.target.style.backgroundColor = "#234eda")}
         >
@@ -400,10 +441,12 @@ const handleContextMenu = (event) => {
             {/* Модальное окно для скриншотов в меню*/}
             {isModalOpen && (
         <div style={styles.windowScreensMenu}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
           onClick={closeModal}
         >
           <img
-            src={modalImage}
+            src={screenshotsMenu[currentIndex]}
             alt="Полный скриншот"
             style={{
               maxWidth: "90%",
@@ -533,8 +576,8 @@ const styles = {
     },
     numberDownloads:{
       fontSize: "14px",
-          color: "#888",
-          fontStyle: "italic",
+      color: "#888",
+      fontStyle: "italic",
     },
     appSize:{
       fontSize: "14px",

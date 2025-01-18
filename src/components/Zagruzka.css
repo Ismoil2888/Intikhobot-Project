@@ -12,7 +12,7 @@
 }
 
 .screens::-webkit-scrollbar-thumb {
-  background-color: rgba(218, 218, 218, 0.6);
+  background-color: rgba(235, 235, 235, 0.6);
   border-radius: 10px;
 }
 
@@ -30,7 +30,7 @@ height: 8px;
 }
 
 .screensmenu::-webkit-scrollbar-track {
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   border-radius: 10px;
 }
 
@@ -39,7 +39,7 @@ height: 8px;
 }
 
 .screensmenu::-webkit-scrollbar-thumb {
-  background-color: rgba(218, 218, 218, 0.6);
+  background-color: rgba(238, 238, 238, 0.6);
   border-radius: 10px;
 }
 
@@ -51,7 +51,7 @@ height: 8px;
 .notification {
   position: absolute;
   margin-top: 17%;
-  left: 40%;
+  left: 7%;
   color: rgb(110, 79, 79);
   padding-left: 15px;
   padding-top: 10px;
