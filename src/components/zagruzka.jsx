@@ -633,9 +633,12 @@ const AppInstallPage = () => {
       const touchEndX = e.touches[0].clientX;
       const deltaX = touchStartX - touchEndX;
     
-      // Проверяем, если свайп происходит внутри элемента, который не должен закрывать меню
-      if (isSidebarOpen && touchStartTarget.closest(".no-close-swipe")) {
-        return; // Прерываем обработку, если свайп внутри исключенного элемента
+      // Проверяем, если элемент, на котором началось касание, относится к "no-close-swipe"
+      if (isSidebarOpen && touchStartTarget instanceof HTMLElement) {
+        const noCloseSwipeElement = touchStartTarget.closest(".no-close-swipe");
+        if (noCloseSwipeElement) {
+          return; // Прерываем обработку, если свайп внутри исключенного элемента
+        }
       }
     
       if (isSidebarOpen) {
@@ -655,7 +658,7 @@ const AppInstallPage = () => {
           setTouchStartX(null);
         }
       }
-    };
+    };    
     
     // Пример вызовов goToNext и goToPrev
     const goToNext = () => {
@@ -861,7 +864,7 @@ const handleContextMenu = (event) => {
                 borderRadius: "10px",
                 backgroundColor: loading ? "#ddd" : "transparent",
                 position: "relative",
-              }}
+              }} className="no-close-swipe"
             >
            <img
                         key={index}
@@ -869,6 +872,7 @@ const handleContextMenu = (event) => {
                         alt={`Скриншот ${index + 1}`}
                         style={{ width: "50px", cursor: "pointer" }}
                         onClick={() => openModal(screenshotsMenu, index)}
+                        className="no-close-swipe"
                       />
             </div>
           ))}
@@ -984,7 +988,7 @@ const handleContextMenu = (event) => {
  
  <div style={{textAlign: "left"}}>
 <h2>{language === "tj" ? "Тавсиф:" : "Описание:"}</h2>
-      <p style={{ fontSize: "16px", color: "#666", marginTop: "5px", paddingBottom: "3px" }}>
+      <p style={{ fontSize: "16px", color: "#666" }}>
       {language === "tj" ? "Замимаи мобилӣ барои интихоботи вакилони халқ соли 2025. Ин барнома барои таъмини равшанӣ ва дастрасӣ ба раванди интихобот барои ҳамаи шаҳрвандон офарида шудааст. Аз навсозиҳо бохабар бошед, то ки ба интихоботи соли 2025 пурра омода бошед!" : "Программа выборов народных депутатов 2025 года. Приложение создано для того, чтобы сделать процесс выборов прозрачным и доступным каждому. Следите за обновлениями, чтобы быть полностью подготовленным к выборам 2025 года!"}
       </p>
       </div>
@@ -1017,7 +1021,8 @@ const handleContextMenu = (event) => {
 
 {isMenuModalOpen && (
           <div style={styles.windowMenu}  className="no-close-swipe">
-            <div  style={{
+            <div  
+            style={{
               backgroundColor: "#fff",
               padding: "20px",
               borderRadius: "10px",
@@ -1025,7 +1030,7 @@ const handleContextMenu = (event) => {
               width: "90%",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
               textAlign: "center",
-            }}>
+            }} className="no-close-swipe">
               {modalContent}
               <div></div>
               <button style={styles.closeButton2} onClick={closeMenuModal}>Закрыть</button>
