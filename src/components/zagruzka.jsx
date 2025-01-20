@@ -499,6 +499,7 @@
 import React, { useState, useEffect } from "react";
 import { database } from "../firebase/firebase";
 import { ref, get, runTransaction } from "firebase/database";
+import { motion, AnimatePresence } from "framer-motion";
 import "./Zagruzka.css";
 
 const AppInstallPage = () => {
@@ -627,15 +628,34 @@ const AppInstallPage = () => {
   
       const touchEndX = e.touches[0].clientX;
       const deltaX = touchStartX - touchEndX;
-  
-      if (deltaX > 50) {
-        goToNext();
-        setTouchStartX(null);
-      } else if (deltaX < -50) {
-        goToPrev();
-        setTouchStartX(null);
+
+      if (isSidebarOpen) {
+        // Логика для закрытия бокового меню
+        if (deltaX > 50) {
+          setIsSidebarOpen(false);
+          setTouchStartX(null);
+          return; // Выходим, чтобы свайп не перелистывал изображения
+        }
+      } else {
+        // Логика для перелистывания изображений
+        if (deltaX > 50) {
+          goToNext();
+          setTouchStartX(null);
+        } else if (deltaX < -50) {
+          goToPrev();
+          setTouchStartX(null);
+        }
       }
     };
+  
+    //   if (deltaX > 50) {
+    //     goToNext();
+    //     setTouchStartX(null);
+    //   } else if (deltaX < -50) {
+    //     goToPrev();
+    //     setTouchStartX(null);
+    //   }
+    // };
   
     const goToNext = () => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % currentArray.length);
@@ -646,6 +666,23 @@ const AppInstallPage = () => {
         prevIndex === 0 ? currentArray.length - 1 : prevIndex - 1
       );
     };
+
+    const variants = {
+      enter: (direction) => ({
+        x: direction > 0 ? 300 : -300,
+        opacity: 0,
+      }),
+      center: {
+        x: 0,
+        opacity: 1,
+      },
+      exit: (direction) => ({
+        x: direction > 0 ? -300 : 300,
+        opacity: 0,
+      }),
+    };
+  
+    const direction = 1; // 1 for next, -1 for previous
   
     const openMenuModal = (content) => {
       setModalContent(content);
@@ -758,7 +795,7 @@ const handleContextMenu = (event) => {
             )
           }
           style={styles.buttonWindow1}>
-          {language === "tj" 
+          {language === "tj"
             ? `Барнома барои дастгоҳҳои кӯҳна` 
             : `Приложение для старых устройств`}
         </button>
@@ -792,13 +829,24 @@ const handleContextMenu = (event) => {
                 position: "relative",
               }}
             >
-           <img
+              <AnimatePresence initial={false} custom={direction}>
+           <motion.img
                         key={index}
                         src={screenshot}
                         alt={`Скриншот ${index + 1}`}
                         style={{ width: "50px", cursor: "pointer" }}
                         onClick={() => openModal(screenshotsMenu, index)}
+                        custom={direction}
+                        variants={variants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{
+                          x: { type: "spring", stiffness: 300, damping: 30 },
+                          opacity: { duration: 0.2 },
+                        }}
                       />
+                      </AnimatePresence>
             </div>
           ))}
         </div>
@@ -892,7 +940,8 @@ const handleContextMenu = (event) => {
               position: "relative",
             }}
           >
-            <img
+            <AnimatePresence initial={false} custom={direction}>
+            <motion.img
             key={index}
               src={screenshot}
               alt={`Скриншот ${index + 1}`}
@@ -906,7 +955,17 @@ const handleContextMenu = (event) => {
                 cursor: "pointer",
                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               }}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
             />
+            </AnimatePresence>
           </div>
         ))}
       </div>
@@ -914,7 +973,7 @@ const handleContextMenu = (event) => {
  <div style={{textAlign: "left"}}>
 <h2>{language === "tj" ? "Тавсиф:" : "Описание:"}</h2>
       <p style={{ fontSize: "16px", color: "#666", marginTop: "10px" }}>
-      {language === "tj" ? "Барнома барои интихоботи вакилони халқ соли 2025. Насб кунед ва аз имконоти муфиди он истифода баред!" : "Программа выборов народных депутатов 2025 года. Устанавливайте и пользуйтесь ее полезными возможностями!"}
+      {language === "tj" ? "Замимаи мобилӣ барои интихоботи вакилони халқ соли 2025. Насб кунед ва аз имконоти муфиди он истифода баред!" : "Программа выборов народных депутатов 2025 года. Устанавливайте и пользуйтесь ее полезными возможностями!"}
       </p>
       </div>
 
