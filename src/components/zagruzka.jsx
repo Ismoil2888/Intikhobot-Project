@@ -560,7 +560,7 @@ const AppInstallPage = () => {
   const handleDownload = (fileName) => {
     const lastDownloadTime = localStorage.getItem("lastDownloadTime");
     const currentTime = Date.now();
-
+  
     if (lastDownloadTime && currentTime - lastDownloadTime < 24 * 60 * 60 * 1000) {
       alert(
         language === "tj"
@@ -569,24 +569,24 @@ const AppInstallPage = () => {
       );
       return;
     }
-
+  
     localStorage.setItem("lastDownloadTime", currentTime);
-
+  
     setIsDownloading(true);
     setProgress(0);
-
+  
     const apkFileUrl = `${process.env.PUBLIC_URL}/apk-files/${fileName}`;
     const xhr = new XMLHttpRequest();
     xhr.open("GET", apkFileUrl, true);
     xhr.responseType = "blob";
-
+  
     xhr.onprogress = (event) => {
       if (event.lengthComputable) {
         const percentComplete = Math.round((event.loaded / event.total) * 100);
         setProgress(percentComplete);
       }
     };
-
+  
     xhr.onload = () => {
       if (xhr.status === 200) {
         const blob = new Blob([xhr.response], { type: "application/vnd.android.package-archive" });
@@ -594,7 +594,7 @@ const AppInstallPage = () => {
         link.href = URL.createObjectURL(blob);
         link.download = fileName;
         link.click();
-
+  
         setProgress(100);
         setIsDownloading(false);
         setDownloadComplete(true);
@@ -603,21 +603,34 @@ const AppInstallPage = () => {
         setIsDownloading(false);
       }
     };
-
+  
     xhr.onerror = () => {
       alert("Ошибка при соединении");
       setIsDownloading(false);
     };
-
+  
     xhr.send();
-  };
 
-  const handleInstall = () => {
-    alert(
-      language === "tj"
-        ? "Инструкция по установке: откройте загруженный файл и следуйте инструкциям."
-        : "Установка: откройте загруженный файл и следуйте инструкциям."
-    );
+    const downloadsRef = ref(database, "downloads");
+
+    runTransaction(downloadsRef, (currentData) => {
+      if (currentData === null) {
+        return { count: 1 };
+      }
+      return { count: currentData.count + 1 };
+    })
+      .then(() => {
+        console.log("Количество скачиваний успешно обновлено.");
+        setDownloads((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Ошибка транзакции:", error);
+      });
+  };
+  
+  const handleViewFile = () => {
+    const apkFileUrl = `${process.env.PUBLIC_URL}/apk-files/intikhobot-2025_arm64-v8a.apk`;
+    window.open(apkFileUrl, '_blank');
   };
 
   // const handleDownload = (fileName) => {
@@ -1037,34 +1050,28 @@ const handleContextMenu = (event) => {
       </div>
 
       {isDownloading && (
-        <div>
-          <p>{language === "tj" ? "Дар ҳоли зеркашӣ..." : "Загрузка..."}</p>
-          <progress value={progress} max="100"></progress>
-          <p>{progress}%</p>
-        </div>
-      )}
+      <div>
+        <p>{language === "tj" ? "Дар ҳоли зеркашӣ..." : "Загрузка..."}</p>
+        <progress value={progress} max="100"></progress>
+        <p>{progress}%</p>
+      </div>
+    )}
 
-      {downloadComplete && (
-        <div style={{ marginTop: "20px", border: "1px solid #ddd", padding: "15px" }}>
-          <p>
-            {language === "tj"
-              ? "Файл барнома зеркашӣ шуд, ҳоло онро дар дастгоҳ насб кунед."
-              : "Файл приложения загружен, теперь установите его на устройство."}
-          </p>
-          <button
-            style={{
-              backgroundColor: "#45a049",
-              color: "#fff",
-              padding: "10px 20px",
-              border: "none",
-              cursor: "pointer",
-            }}
-            onClick={handleInstall}
-          >
-            {language === "tj" ? "Насб кардан" : "Установить на устройство"}
-          </button>
-        </div>
-      )}
+    {downloadComplete && (
+      <div style={{ marginTop: "20px", border: "1px solid #ddd", padding: "15px" }}>
+        <p>
+          {language === "tj"
+            ? "Файл барнома зеркашӣ шуд, ҳоло онро дар дастгоҳ насб кунед."
+            : "Файл приложения загружен, теперь установите его на устройство."}
+        </p>
+        <button
+          style={{ backgroundColor: "#45a049", color: "#fff", padding: "10px 20px", border: "none", cursor: "pointer" }}
+          onClick={handleViewFile}
+        >
+          {language === "tj" ? "Насб кардан" : "Установить на устройство"}
+        </button>
+      </div>
+    )}
 
       {/* Скриншоты приложения */}
       <div style={styles.screensBlock} className="screens">
