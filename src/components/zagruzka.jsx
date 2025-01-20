@@ -624,7 +624,13 @@ const AppInstallPage = () => {
     const handleTouchStart = (e) => {
       // Сохраняем начальную точку касания
       setTouchStartX(e.touches[0].clientX);
-      setTouchStartTarget(e.target); // Сохраняем элемент, на котором началось касание
+    
+      // Проверяем, существует ли e.target и является ли он элементом DOM
+      if (e.target instanceof HTMLElement) {
+        setTouchStartTarget(e.target);
+      } else {
+        setTouchStartTarget(null); // Если e.target недействителен
+      }
     };
     
     const handleTouchMove = (e) => {
@@ -633,12 +639,19 @@ const AppInstallPage = () => {
       const touchEndX = e.touches[0].clientX;
       const deltaX = touchStartX - touchEndX;
     
-      // Проверяем, если элемент, на котором началось касание, относится к "no-close-swipe"
-      if (isSidebarOpen && touchStartTarget instanceof HTMLElement) {
-        const noCloseSwipeElement = touchStartTarget.closest(".no-close-swipe");
-        if (noCloseSwipeElement) {
-          return; // Прерываем обработку, если свайп внутри исключенного элемента
-        }
+      // Диагностика для отладки
+      console.log("Touch started on:", touchStartTarget);
+      console.log("Touch deltaX:", deltaX);
+    
+      // Проверяем, если свайп происходит внутри элемента с классом "no-close-swipe"
+      if (
+        isSidebarOpen &&
+        touchStartTarget &&
+        touchStartTarget.closest &&
+        touchStartTarget.closest(".no-close-swipe")
+      ) {
+        console.log("Swipe detected inside no-close-swipe element. Aborting menu close.");
+        return; // Если внутри элемента с классом "no-close-swipe", не закрываем меню
       }
     
       if (isSidebarOpen) {
@@ -646,6 +659,7 @@ const AppInstallPage = () => {
         if (deltaX > 50) {
           setIsSidebarOpen(false);
           setTouchStartX(null);
+          console.log("Sidebar closed via swipe.");
           return;
         }
       } else {
@@ -653,12 +667,14 @@ const AppInstallPage = () => {
         if (deltaX > 50) {
           goToNext();
           setTouchStartX(null);
+          console.log("Next image.");
         } else if (deltaX < -50) {
           goToPrev();
           setTouchStartX(null);
+          console.log("Previous image.");
         }
       }
-    };    
+    };
     
     // Пример вызовов goToNext и goToPrev
     const goToNext = () => {
@@ -669,7 +685,7 @@ const AppInstallPage = () => {
       setCurrentIndex((prevIndex) =>
         prevIndex === 0 ? currentArray.length - 1 : prevIndex - 1
       );
-    };    
+    };
   
     // const handleTouchStart = (e) => {
     //   setTouchStartX(e.touches[0].clientX);
@@ -890,7 +906,7 @@ const handleContextMenu = (event) => {
             openMenuModal(
               <>
                 <h3>Для пользователей iPhone</h3>
-                <p>
+                <p style={{marginTop: "15px"}}>
                 {language === "tj" ? `Ба наздики!` : `Скоро!`}
                 </p>
               </>
