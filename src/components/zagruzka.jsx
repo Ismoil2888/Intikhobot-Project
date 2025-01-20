@@ -619,23 +619,30 @@ const AppInstallPage = () => {
     const closeModal = () => {
       setIsModalOpen(false);
     };
-  
+
     const handleTouchStart = (e) => {
+      // Сохраняем начальную точку касания
       setTouchStartX(e.touches[0].clientX);
+      setTouchStartTarget(e.target); // Сохраняем элемент, на котором началось касание
     };
-  
+    
     const handleTouchMove = (e) => {
       if (!touchStartX) return;
-  
+    
       const touchEndX = e.touches[0].clientX;
       const deltaX = touchStartX - touchEndX;
-
+    
+      // Проверяем, если свайп происходит внутри элемента, который не должен закрывать меню
+      if (isSidebarOpen && touchStartTarget.closest(".no-close-swipe")) {
+        return; // Прерываем обработку, если свайп внутри исключенного элемента
+      }
+    
       if (isSidebarOpen) {
         // Логика для закрытия бокового меню
         if (deltaX > 50) {
           setIsSidebarOpen(false);
           setTouchStartX(null);
-          return; // Выходим, чтобы свайп не перелистывал изображения
+          return;
         }
       } else {
         // Логика для перелистывания изображений
@@ -648,6 +655,46 @@ const AppInstallPage = () => {
         }
       }
     };
+    
+    // Пример вызовов goToNext и goToPrev
+    const goToNext = () => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % currentArray.length);
+    };
+    
+    const goToPrev = () => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === 0 ? currentArray.length - 1 : prevIndex - 1
+      );
+    };    
+  
+    // const handleTouchStart = (e) => {
+    //   setTouchStartX(e.touches[0].clientX);
+    // };
+  
+    // const handleTouchMove = (e) => {
+    //   if (!touchStartX) return;
+  
+    //   const touchEndX = e.touches[0].clientX;
+    //   const deltaX = touchStartX - touchEndX;
+
+    //   if (isSidebarOpen) {
+    //     // Логика для закрытия бокового меню
+    //     if (deltaX > 50) {
+    //       setIsSidebarOpen(false);
+    //       setTouchStartX(null);
+    //       return; // Выходим, чтобы свайп не перелистывал изображения
+    //     }
+    //   } else {
+    //     // Логика для перелистывания изображений
+    //     if (deltaX > 50) {
+    //       goToNext();
+    //       setTouchStartX(null);
+    //     } else if (deltaX < -50) {
+    //       goToPrev();
+    //       setTouchStartX(null);
+    //     }
+    //   }
+    // };
   
     //   if (deltaX > 50) {
     //     goToNext();
@@ -658,15 +705,15 @@ const AppInstallPage = () => {
     //   }
     // };
   
-    const goToNext = () => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % currentArray.length);
-    };
+    // const goToNext = () => {
+    //   setCurrentIndex((prevIndex) => (prevIndex + 1) % currentArray.length);
+    // };
   
-    const goToPrev = () => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? currentArray.length - 1 : prevIndex - 1
-      );
-    };
+    // const goToPrev = () => {
+    //   setCurrentIndex((prevIndex) =>
+    //     prevIndex === 0 ? currentArray.length - 1 : prevIndex - 1
+    //   );
+    // };
   
     const openMenuModal = (content) => {
       setModalContent(content);
@@ -802,7 +849,7 @@ const handleContextMenu = (event) => {
               нажав на "Подробнее...", где будет файл приложения. При необходимости в настройках дайте разрешение на установку
               приложений из неизвестных источников и начнется установка приложения на ваше устройство.`}
         </p>
-        <div style={styles.screensBlockMenu} className="screensmenu">
+        <div style={styles.screensBlockMenu} className="screensmenu no-close-swipe">
           {screenshotsMenu.map((screenshot, index) => (
             <div
               key={index}
@@ -839,7 +886,7 @@ const handleContextMenu = (event) => {
               <>
                 <h3>Для пользователей iPhone</h3>
                 <p>
-                  .........
+                {language === "tj" ? `Ба наздики!` : `Скоро!`}
                 </p>
               </>
             )
@@ -937,7 +984,7 @@ const handleContextMenu = (event) => {
  <div style={{textAlign: "left"}}>
 <h2>{language === "tj" ? "Тавсиф:" : "Описание:"}</h2>
       <p style={{ fontSize: "16px", color: "#666", marginTop: "10px" }}>
-      {language === "tj" ? "Замимаи мобилӣ барои интихоботи вакилони халқ соли 2025. Насб кунед ва аз имконоти муфиди он истифода баред!" : "Программа выборов народных депутатов 2025 года. Устанавливайте и пользуйтесь ее полезными возможностями!"}
+      {language === "tj" ? "Замимаи мобилӣ барои интихоботи вакилони халқ соли 2025. Ин барнома барои таъмини равшанӣ ва дастрасӣ ба раванди интихобот барои ҳамаи шаҳрвандон офарида шудааст. Аз навсозиҳо бохабар бошед, то ки ба интихоботи соли 2025 пурра омода бошед!" : "Программа выборов народных депутатов 2025 года. Приложение создано для того, чтобы сделать процесс выборов прозрачным и доступным каждому. Следите за обновлениями, чтобы быть полностью подготовленным к выборам 2025 года!"}
       </p>
       </div>
 
