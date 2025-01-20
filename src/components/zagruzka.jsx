@@ -502,6 +502,10 @@ import { ref, get, runTransaction } from "firebase/database";
 import "./Zagruzka.css";
 
 const AppInstallPage = () => {
+  const [progress, setProgress] = useState(0);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadComplete, setDownloadComplete] = useState(false);
+
   const [downloads, setDownloads] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentArray, setCurrentArray] = useState([]);
@@ -558,42 +562,105 @@ const AppInstallPage = () => {
     const currentTime = Date.now();
 
     if (lastDownloadTime && currentTime - lastDownloadTime < 24 * 60 * 60 * 1000) {
-      showNotificationError(language === "tj" 
-        ? "Шумо аллакай барномаро насб кардед. Такрор кардани насб баъд аз 24 соат имконпазир аст." 
-        : "Вы уже скачали приложение. Повторная загрузка возможна через 24 часа."
+      alert(
+        language === "tj"
+          ? "Шумо аллакай барномаро насб кардед. Такрор кардани насб баъд аз 24 соат имконпазир аст."
+          : "Вы уже скачали приложение. Повторная загрузка возможна через 24 часа."
       );
       return;
     }
 
     localStorage.setItem("lastDownloadTime", currentTime);
 
+    setIsDownloading(true);
+    setProgress(0);
+
     const apkFileUrl = `${process.env.PUBLIC_URL}/apk-files/${fileName}`;
-    const link = document.createElement("a");
-    link.href = apkFileUrl;
-    link.download = fileName;
-    link.click();
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", apkFileUrl, true);
+    xhr.responseType = "blob";
 
-    showNotification(language === "tj" 
-      ? "Як лаҳза" 
-      : "Минуту"
-    );
-
-    const downloadsRef = ref(database, "downloads");
-
-    runTransaction(downloadsRef, (currentData) => {
-      if (currentData === null) {
-        return { count: 1 };
+    xhr.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = Math.round((event.loaded / event.total) * 100);
+        setProgress(percentComplete);
       }
-      return { count: currentData.count + 1 };
-    })
-      .then(() => {
-        console.log("Количество скачиваний успешно обновлено.");
-        setDownloads((prev) => prev + 1);
-      })
-      .catch((error) => {
-        console.error("Ошибка транзакции:", error);
-      });
+    };
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const blob = new Blob([xhr.response], { type: "application/vnd.android.package-archive" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+
+        setProgress(100);
+        setIsDownloading(false);
+        setDownloadComplete(true);
+      } else {
+        alert("Ошибка при загрузке файла");
+        setIsDownloading(false);
+      }
+    };
+
+    xhr.onerror = () => {
+      alert("Ошибка при соединении");
+      setIsDownloading(false);
+    };
+
+    xhr.send();
   };
+
+  const handleInstall = () => {
+    alert(
+      language === "tj"
+        ? "Инструкция по установке: откройте загруженный файл и следуйте инструкциям."
+        : "Установка: откройте загруженный файл и следуйте инструкциям."
+    );
+  };
+
+  // const handleDownload = (fileName) => {
+  //   const lastDownloadTime = localStorage.getItem("lastDownloadTime");
+  //   const currentTime = Date.now();
+
+  //   if (lastDownloadTime && currentTime - lastDownloadTime < 24 * 60 * 60 * 1000) {
+  //     showNotificationError(language === "tj" 
+  //       ? "Шумо аллакай барномаро насб кардед. Такрор кардани насб баъд аз 24 соат имконпазир аст." 
+  //       : "Вы уже скачали приложение. Повторная загрузка возможна через 24 часа."
+  //     );
+  //     return;
+  //   }
+
+  //   localStorage.setItem("lastDownloadTime", currentTime);
+
+  //   const apkFileUrl = `${process.env.PUBLIC_URL}/apk-files/${fileName}`;
+  //   const link = document.createElement("a");
+  //   link.href = apkFileUrl;
+  //   link.download = fileName;
+  //   link.click();
+
+  //   showNotification(language === "tj" 
+  //     ? "Як лаҳза" 
+  //     : "Минуту"
+  //   );
+
+  //   const downloadsRef = ref(database, "downloads");
+
+  //   runTransaction(downloadsRef, (currentData) => {
+  //     if (currentData === null) {
+  //       return { count: 1 };
+  //     }
+  //     return { count: currentData.count + 1 };
+  //   })
+  //     .then(() => {
+  //       console.log("Количество скачиваний успешно обновлено.");
+  //       setDownloads((prev) => prev + 1);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Ошибка транзакции:", error);
+  //     });
+  // };
 
 
     // Устанавливаем язык из localStorage при загрузке страницы
@@ -968,6 +1035,36 @@ const handleContextMenu = (event) => {
           {language === "tj" ? "Насб кардан " : "Скачать приложения"}
         </button>
       </div>
+
+      {isDownloading && (
+        <div>
+          <p>{language === "tj" ? "Дар ҳоли зеркашӣ..." : "Загрузка..."}</p>
+          <progress value={progress} max="100"></progress>
+          <p>{progress}%</p>
+        </div>
+      )}
+
+      {downloadComplete && (
+        <div style={{ marginTop: "20px", border: "1px solid #ddd", padding: "15px" }}>
+          <p>
+            {language === "tj"
+              ? "Файл барнома зеркашӣ шуд, ҳоло онро дар дастгоҳ насб кунед."
+              : "Файл приложения загружен, теперь установите его на устройство."}
+          </p>
+          <button
+            style={{
+              backgroundColor: "#45a049",
+              color: "#fff",
+              padding: "10px 20px",
+              border: "none",
+              cursor: "pointer",
+            }}
+            onClick={handleInstall}
+          >
+            {language === "tj" ? "Насб кардан" : "Установить на устройство"}
+          </button>
+        </div>
+      )}
 
       {/* Скриншоты приложения */}
       <div style={styles.screensBlock} className="screens">
