@@ -506,6 +506,7 @@ const AppInstallPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentArray, setCurrentArray] = useState([]);
   const [touchStartX, setTouchStartX] = useState(null);
+  const [touchStartTarget, setTouchStartTarget] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
