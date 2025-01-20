@@ -499,7 +499,6 @@
 import React, { useState, useEffect } from "react";
 import { database } from "../firebase/firebase";
 import { ref, get, runTransaction } from "firebase/database";
-import { motion, AnimatePresence } from "framer-motion";
 import "./Zagruzka.css";
 
 const AppInstallPage = () => {
@@ -738,6 +737,8 @@ const handleContextMenu = (event) => {
 
             {/* Боковое меню */}
             <aside
+              onTouchStart={handleTouchStart} // Добавляем обработчики для меню
+              onTouchMove={handleTouchMove}
         style={{
           position: "fixed",
           top: 0,
