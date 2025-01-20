@@ -984,7 +984,7 @@ const handleContextMenu = (event) => {
  
  <div style={{textAlign: "left"}}>
 <h2>{language === "tj" ? "Тавсиф:" : "Описание:"}</h2>
-      <p style={{ fontSize: "16px", color: "#666", marginTop: "10px" }}>
+      <p style={{ fontSize: "16px", color: "#666", marginTop: "5px", paddingBottom: "3px" }}>
       {language === "tj" ? "Замимаи мобилӣ барои интихоботи вакилони халқ соли 2025. Ин барнома барои таъмини равшанӣ ва дастрасӣ ба раванди интихобот барои ҳамаи шаҳрвандон офарида шудааст. Аз навсозиҳо бохабар бошед, то ки ба интихоботи соли 2025 пурра омода бошед!" : "Программа выборов народных депутатов 2025 года. Приложение создано для того, чтобы сделать процесс выборов прозрачным и доступным каждому. Следите за обновлениями, чтобы быть полностью подготовленным к выборам 2025 года!"}
       </p>
       </div>
@@ -1016,7 +1016,7 @@ const handleContextMenu = (event) => {
 
 
 {isMenuModalOpen && (
-          <div style={styles.windowMenu}>
+          <div style={styles.windowMenu}  className="no-close-swipe">
             <div  style={{
               backgroundColor: "#fff",
               padding: "20px",
