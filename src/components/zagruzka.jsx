@@ -531,6 +531,8 @@ const AppInstallPage = () => {
     `${process.env.PUBLIC_URL}/images/Screenshot_d4.png`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d5.jpg`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d6.jpg`,
+    `${process.env.PUBLIC_URL}/images/Screenshot_d7.jpg`,
+    `${process.env.PUBLIC_URL}/images/Screenshot_d8.jpg`,
   ];
 
 
@@ -666,23 +668,6 @@ const AppInstallPage = () => {
         prevIndex === 0 ? currentArray.length - 1 : prevIndex - 1
       );
     };
-
-    const variants = {
-      enter: (direction) => ({
-        x: direction > 0 ? 300 : -300,
-        opacity: 0,
-      }),
-      center: {
-        x: 0,
-        opacity: 1,
-      },
-      exit: (direction) => ({
-        x: direction > 0 ? -300 : 300,
-        opacity: 0,
-      }),
-    };
-  
-    const direction = 1; // 1 for next, -1 for previous
   
     const openMenuModal = (content) => {
       setModalContent(content);
@@ -811,9 +796,9 @@ const handleContextMenu = (event) => {
         <p>
           {language === "tj"
             ? ` Барои насб кардани барнома, файли APK-ро зеркашӣ кунед ва онро кушоед,  
-              бо пахш кардани "Маълумоти бештар", ки дар он ҷо файли барнома хоҳад буд. Агар лозим бошад, дар танзимот ба насби барномаҳо аз манбаъҳои номаълум иҷозат диҳед, ва насби барнома дар дастгоҳи шумо оғоз меёбад.`
+              бо пахш кардани "Подробнее...", ки дар он ҷо файли барнома хоҳад буд. Агар лозим бошад, дар танзимоти дастгоҳатон ба насби барномаҳо аз манбаъҳои номаълум иҷозат диҳед, ва насби барнома дар дастгоҳи шумо оғоз меёбад.`
             : ` Чтобы установить приложение, скачайте APK-файл и откройте его,
-              нажав на "Подробнее", где будет файл приложения. При необходимости в настройках дайте разрешение на установку
+              нажав на "Подробнее...", где будет файл приложения. При необходимости в настройках дайте разрешение на установку
               приложений из неизвестных источников и начнется установка приложения на ваше устройство.`}
         </p>
         <div style={styles.screensBlockMenu} className="screensmenu">
@@ -829,24 +814,13 @@ const handleContextMenu = (event) => {
                 position: "relative",
               }}
             >
-              <AnimatePresence initial={false} custom={direction}>
-           <motion.img
+           <img
                         key={index}
                         src={screenshot}
                         alt={`Скриншот ${index + 1}`}
                         style={{ width: "50px", cursor: "pointer" }}
                         onClick={() => openModal(screenshotsMenu, index)}
-                        custom={direction}
-                        variants={variants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        transition={{
-                          x: { type: "spring", stiffness: 300, damping: 30 },
-                          opacity: { duration: 0.2 },
-                        }}
                       />
-                      </AnimatePresence>
             </div>
           ))}
         </div>
@@ -940,8 +914,7 @@ const handleContextMenu = (event) => {
               position: "relative",
             }}
           >
-            <AnimatePresence initial={false} custom={direction}>
-            <motion.img
+            <img
             key={index}
               src={screenshot}
               alt={`Скриншот ${index + 1}`}
@@ -955,17 +928,7 @@ const handleContextMenu = (event) => {
                 cursor: "pointer",
                 boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               }}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-              }}
             />
-            </AnimatePresence>
           </div>
         ))}
       </div>
