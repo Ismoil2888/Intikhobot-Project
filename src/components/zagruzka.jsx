@@ -562,7 +562,7 @@ const AppInstallPage = () => {
     const currentTime = Date.now();
   
     if (lastDownloadTime && currentTime - lastDownloadTime < 24 * 60 * 60 * 1000) {
-      alert(
+      showNotificationError(
         language === "tj"
           ? "Шумо аллакай барномаро насб кардед. Такрор кардани насб баъд аз 24 соат имконпазир аст."
           : "Вы уже скачали приложение. Повторная загрузка возможна через 24 часа."
@@ -594,6 +594,11 @@ const AppInstallPage = () => {
         link.href = URL.createObjectURL(blob);
         link.download = fileName;
         link.click();
+
+        showNotification(language === "tj" 
+               ? "Як лаҳза" 
+               : "Минуту"
+             );
   
         setProgress(100);
         setIsDownloading(false);
@@ -605,7 +610,7 @@ const AppInstallPage = () => {
     };
   
     xhr.onerror = () => {
-      alert("Ошибка при соединении");
+      showNotificationError("Ошибка при соединении");
       setIsDownloading(false);
     };
   
@@ -1050,28 +1055,86 @@ const handleContextMenu = (event) => {
       </div>
 
       {isDownloading && (
-      <div>
-        <p>{language === "tj" ? "Дар ҳоли зеркашӣ..." : "Загрузка..."}</p>
-        <progress value={progress} max="100"></progress>
-        <p>{progress}%</p>
-      </div>
-    )}
+  <div style={{ 
+    position: 'fixed', 
+    top: 0, 
+    left: 0, 
+    width: '100%', 
+    height: '100%', 
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    zIndex: 1000 
+  }}>
+    <div style={{ 
+      backgroundColor: '#fff', 
+      borderRadius: '8px', 
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', 
+      padding: '20px', 
+      width: '400px',
+      textAlign: 'center'
+    }}>
+      <p style={{ marginBottom: '10px', fontSize: '16px', color: '#333' }}>
+        {language === "tj" ? "Дар ҳоли зеркашӣ..." : "Загрузка..."}
+      </p>
+      <progress value={progress} max="100" style={{ width: '100%', marginBottom: '10px' }}></progress>
+      <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>{progress}%</p>
+    </div>
+  </div>
+)}
 
-    {downloadComplete && (
-      <div style={{ marginTop: "20px", border: "1px solid #ddd", padding: "15px" }}>
-        <p>
-          {language === "tj"
-            ? "Файл барнома зеркашӣ шуд, ҳоло онро дар дастгоҳ насб кунед."
-            : "Файл приложения загружен, теперь установите его на устройство."}
-        </p>
-        <button
-          style={{ backgroundColor: "#45a049", color: "#fff", padding: "10px 20px", border: "none", cursor: "pointer" }}
-          onClick={handleViewFile}
-        >
-          {language === "tj" ? "Насб кардан" : "Установить на устройство"}
-        </button>
-      </div>
-    )}
+{downloadComplete && (
+  <div style={{ 
+    position: 'fixed', 
+    top: 0, 
+    left: 0, 
+    width: '100%', 
+    height: '100%', 
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    zIndex: 1000 
+  }} onClick={() => setDownloadComplete(false)}>
+    <div style={{ 
+      backgroundColor: '#fff', 
+      borderRadius: '8px', 
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', 
+      padding: '20px', 
+      width: '400px',
+      textAlign: 'center',
+      position: 'relative'
+    }}>
+      <button 
+        style={{ 
+          position: 'absolute', 
+          top: '10px', 
+          right: '10px', 
+          background: 'none', 
+          border: 'none', 
+          cursor: 'pointer', 
+          fontSize: '18px', 
+          color: '#666' 
+        }}
+        onClick={() => setDownloadComplete(false)}
+      >
+        &times;
+      </button>
+      <p style={{ marginBottom: '15px', fontSize: '16px', color: '#333' }}>
+        {language === "tj"
+          ? "Файл барнома зеркашӣ шуд, ҳоло онро дар дастгоҳ насб кунед. Шумо метавонед тарзи насб кардани барномаро дар дастурҳо бинед, дастурҳо дар меню тарафи чапи болои сомона ҷойгир аст."
+          : "Файл приложения загружен, теперь установите его на устройство. Как установить программу можно посмотреть в инструкции, инструкция находится в меню слева вверху сайта."}
+      </p>
+      <button
+        style={{ backgroundColor: '#007bff', color: '#fff', padding: '10px 20px', border: 'none', borderRadius: '5px', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}
+        onClick={handleViewFile}
+      >
+        {language === "tj" ? "Насб кардан ба дастгоҳ" : "Установить на устройство"}
+      </button>
+    </div>
+  </div>
+)}
 
       {/* Скриншоты приложения */}
       <div style={styles.screensBlock} className="screens">
