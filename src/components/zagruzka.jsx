@@ -532,11 +532,10 @@ const AppInstallPage = () => {
     `${process.env.PUBLIC_URL}/images/Screenshot_d1.jpg`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d2.jpg`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d3.png`,
-    `${process.env.PUBLIC_URL}/images/Screenshot_d4.png`,
+    `${process.env.PUBLIC_URL}/images/Screenshot_d4.jpg`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d5.jpg`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d6.jpg`,
     `${process.env.PUBLIC_URL}/images/Screenshot_d7.jpg`,
-    `${process.env.PUBLIC_URL}/images/Screenshot_d8.jpg`,
   ];
 
 
