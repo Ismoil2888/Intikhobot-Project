@@ -60,7 +60,7 @@ height: 8px;
   background-color: rgba(201, 199, 199, 0.3);
   backdrop-filter: blur(10px);
   width: 350px;
-  height: 60px;
+  height: 70px;
   animation: fadeInOut 3s ease-in-out;
 }
 
