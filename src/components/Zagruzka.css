@@ -99,4 +99,7 @@ height: 8px;
 
 .notification.neutral {
   background-color: rgba(201, 199, 199, 0.3); /* Красный цвет для ошибок */
+  color: #085f6e;
+  font-weight: bold;
+  padding: 15px;
 }

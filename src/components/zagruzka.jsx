@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { database } from "../firebase/firebase";
 import { ref, get, runTransaction } from "firebase/database";
+import { FaDownload } from "react-icons/fa";
 import "./Zagruzka.css";
 
 const AppInstallPage = () => {
@@ -286,7 +287,7 @@ const AppInstallPage = () => {
     setTimeout(() => {
       setNotification("");
       setNotificationType("");
-    }, 15000);
+    }, 7000);
   };
 
   // Функция для ошибочных уведомлений
@@ -304,7 +305,7 @@ const AppInstallPage = () => {
   }
 
   useEffect(() => {
-      showNotification("Агар шумо iPhone-ро истифода баред, менюи кунҷи чапи болоии сомонаро кушоед");
+    showNotificationNeutral("Агар шумо iPhone-ро истифода баред, менюи кунҷи чапи болоии сомонаро кушоед");
   }, []);
   
 
@@ -317,7 +318,7 @@ const AppInstallPage = () => {
       )}
       {/* Шапка с меню */}
       <header style={styles.header}>
-        <h2 style={{ marginLeft: 70 }}>{language === "tj" ? "Интихоботи 2025" : "Выборы 2025"}</h2>
+        <h2 style={{ marginLeft: 70 }}>{language === "tj" ? "Интихобот 2025" : "Выборы 2025"}</h2>
         <button style={styles.headerMenuButton}
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
           ☰
@@ -370,9 +371,10 @@ const AppInstallPage = () => {
                   </p>
                   <button style={styles.downloadButton2}
                     onClick={() => handleDownload("intikhobot-2025_armeabi-v7a.apk")}>
+                      <FaDownload style={{marginRight: "7px"}}/>
                     {language === "tj"
-                      ? `Насб кардан`
-                      : `Скачать APK`}
+                      ? ` Насб кардан`
+                      : ` Скачать APK`}
                   </button>
                 </>
               )
@@ -498,8 +500,8 @@ const AppInstallPage = () => {
             onClick={() => handleDownload("intikhobot-2025_arm64-v8a.apk")}
             onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
             onMouseLeave={(e) => (e.target.style.backgroundColor = "#234eda")}
-          >
-            {language === "tj" ? "Насб кардан " : "Скачать приложения"}
+          > <FaDownload style={{marginRight: "7px"}}/>
+            {language === "tj" ? " Насб кардан " : " Скачать приложения"}
           </button>
         </div>
 
